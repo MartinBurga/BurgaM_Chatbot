@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using BurgaM_Chatbot.Models;
+using BurgaM_Chatbot.Repositories;
+using System.Threading.Tasks;
 
 namespace BurgaM_Chatbot.Controllers;
 
@@ -13,9 +15,13 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        geminiRepository repo = new geminiRepository();
+        string answer = await repo.GetChatbotResponse("Cual es el valor de pi");
+
+
+        return View(answer);
     }
 
     public IActionResult Privacy()
